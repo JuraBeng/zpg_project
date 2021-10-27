@@ -14,12 +14,15 @@ class Window
 public:
 	Window(int width, int height);
 	~Window();
-	int GetWidth();
-	int GetHeight();
-	GLint GetBufferWidth() { return bufferWidth; }
-	GLint GetBufferHeight() { return bufferHeight; }
-	GLFWwindow *GetWindow();
+	int getWidth();
+	int getHeight();
+	GLint getBufferWidth() { return bufferWidth; }
+	GLint getBufferHeight() { return bufferHeight; }
+	GLFWwindow *getWindow();
 	bool getShouldClose() { return glfwWindowShouldClose(window); }
+	bool* getKeys() { return keys; }
+	GLfloat getXChange();
+	GLfloat getYChange();
 
 private:
 	int height, width;
@@ -30,7 +33,9 @@ private:
 	GLfloat lastY;
 	GLfloat xChange;
 	GLfloat yChange;
+	bool mouseFirstMoved;
 	void createCallbacks();
+	static void handleMouse(GLFWwindow* window, double xPos, double yPos);
 	static void handleKeys(GLFWwindow* window, int key, int code, int action, int mode);
 };
 

@@ -1,4 +1,5 @@
 #pragma once
+#define STB_IMAGE_IMPLEMENTATION
 #include <stdio.h>
 #include <string.h>
 #include <GL/glew.h>
@@ -10,11 +11,7 @@
 #include <stdlib.h>
 #include <GLFW/glfw3.h>
 #include "Window.h"
-#include "Objects/Rectangle.h"
-#include "Objects/Triangle.h"
-#include "Objects/Triangle1.h"
-#include "Objects/Triangle2.h"
-#include "Objects/Triangle3.h"
+//#include "sphere.h"
 
 //Include the standard C++ headers  
 #include <stdlib.h>
@@ -25,27 +22,37 @@
 #include <vector>
 #include "Objects/Mesh.h"
 #include "Shaders/Shader.h"
+#include "Camera.h"
+
 
 class Engine
 {
 public:
 	Engine(const Engine&) = delete;
-	static Engine& Get()
+	static Engine& get()
 	{
-		return s_Instance;
+		return sInstance;
 	}
-	static void Render() { return Get().IRender(); };
+	static void render() { return get().iRender(); };
 private:
-	void IRender();
+	void iRender();
 	Engine(){
+		lastTime = 0.0f;
+		deltaTime = 0.0f;
+		vShader = "";
+		fShader = "";
 		this->window = new Window(1280, 720);
 	}
-	static Engine s_Instance;
+	static Engine sInstance;
 	Window* window;
 	std::vector<Mesh*> meshList;
 	std::vector<Shader> shaderList;
-	void CreateShader();
+	Camera camera;
+	void createShader();
 	const char* fShader;
 	const char* vShader;
+	GLfloat deltaTime;
+	GLfloat lastTime;
+	void calculateDeltaTime();
 };
 

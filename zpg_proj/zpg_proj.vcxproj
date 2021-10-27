@@ -142,26 +142,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Objects\Mesh.cpp" />
-    <ClCompile Include="Objects\Rectangle.cpp" />
-    <ClCompile Include="Objects\Triangle.cpp" />
-    <ClCompile Include="Objects\Triangle1.cpp" />
-    <ClCompile Include="Objects\Triangle2.cpp" />
-    <ClCompile Include="Objects\Triangle3.cpp" />
     <ClCompile Include="Shaders\Shader.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Objects\Mesh.h" />
-    <ClInclude Include="Objects\Rectangle.h" />
-    <ClInclude Include="Objects\Triangle.h" />
-    <ClInclude Include="Objects\Triangle1.h" />
-    <ClInclude Include="Objects\Triangle2.h" />
-    <ClInclude Include="Objects\Triangle3.h" />
     <ClInclude Include="Shaders\Shader.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -2,6 +2,14 @@
 
 Window::Window(int width, int height)
 {
+	window = NULL;
+	mouseFirstMoved = true;
+	xChange = 0.0f;
+	yChange = 0.0f;
+	bufferHeight = 0;
+	bufferWidth = 0;
+	lastX = 0;
+	lastY = 0;
 	for (size_t i = 0; i < 1024; i++)
 	{
 		keys[i] = 0;
@@ -45,6 +53,7 @@ Window::Window(int width, int height)
 	glfwMakeContextCurrent(window);
 
 	createCallbacks();
+	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	glewExperimental = GL_TRUE;
 
@@ -69,24 +78,54 @@ Window::~Window()
 	glfwTerminate();
 }
 
-int Window::GetWidth()
+int Window::getWidth()
 {
 	return this->width;
 }
 
-int Window::GetHeight()
+int Window::getHeight()
 {
 	return this->height;
 }
 
-GLFWwindow* Window::GetWindow()
+GLFWwindow* Window::getWindow()
 {
 	return this->window;
+}
+
+GLfloat Window::getXChange()
+{
+	GLfloat theChange = xChange;
+	xChange = 0.0f;
+	return theChange;
+}
+
+GLfloat Window::getYChange()
+{
+	GLfloat theChange = yChange;
+	yChange = 0.0f;
+	return theChange;
 }
 
 void Window::createCallbacks()
 {
 	glfwSetKeyCallback(window, handleKeys);
+	glfwSetCursorPosCallback(window, handleMouse);
+}
+
+void Window::handleMouse(GLFWwindow* window, double xPos, double yPos)
+{
+	Window* theWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));
+	if (theWindow->mouseFirstMoved)
+	{
+		theWindow->lastX = (GLfloat)xPos;
+		theWindow->lastY = (GLfloat)yPos;
+		theWindow->mouseFirstMoved = false;
+	}
+	theWindow->xChange = (GLfloat)xPos - theWindow->lastX;
+	theWindow->yChange = theWindow->lastY - (GLfloat)yPos;
+	theWindow->lastX = (GLfloat)xPos;
+	theWindow->lastY = (GLfloat)yPos;
 }
 
 void Window::handleKeys(GLFWwindow* window, int key, int code, int action, int mode)
@@ -102,12 +141,10 @@ void Window::handleKeys(GLFWwindow* window, int key, int code, int action, int m
 		if (action == GLFW_PRESS)
 		{
 			theWindow->keys[key] = true;
-			printf("pressed %d\n", key);
 		}
 		else if (action == GLFW_RELEASE)
 		{
 			theWindow->keys[key] = false;
-			printf("released %d\n", key);
 		}
 	}
 }
