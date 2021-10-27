@@ -1,7 +1,5 @@
-﻿
-#include "Engine.h"
+﻿#include "Engine.h"
 
-//Include the standard C++ headers  
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

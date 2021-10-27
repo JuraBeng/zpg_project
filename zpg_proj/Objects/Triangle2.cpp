@@ -91,7 +91,7 @@ void Triangle2::AddShader(GLuint shaderProgram, GLenum shaderType, const char* s
 }
 
 void Triangle2::CreateObjects()
-{
+{	
 	unsigned int indices[] =
 	{
 		/*0, 3, 1,
@@ -128,9 +128,10 @@ void Triangle2::CreateObjects()
 			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 			glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+	
 
 }
 
@@ -148,36 +149,20 @@ void Triangle2::Render()
 	{
 		direction = !direction;
 	}
-	if (i >= 360)
-	{
-		i = 0;
-	}
-	if (sizeDirection)
-	{
-		curSize += 0.01f;;
-	}
-	else
-	{
-		curSize -= 0.01f;
-	}
-	if (curSize >= maxSize || curSize <= minSize)
-	{
-		sizeDirection = !sizeDirection;
-	}
-	CompileShader();
-	glUseProgram(shaderProgram);
-	glm::mat4 model(1.0f);
-	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)800/(GLfloat)600, 0.1f, 100.0f);
-	model = glm::translate(model, glm::vec3(triOffset, 0.0f, -2.5f));
-	//model = glm::rotate(model, i * toRadians, glm::vec3(.0f, 1.0f, 0.0f));
-	model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
-	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-	//glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
+
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+	glUseProgram(shaderProgram);
+	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)1280 / (GLfloat)720, 0.1f, 100.0f);
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, 0.7f, -2.5f));
+	model = glm::rotate(model, i * 3.14159265359f / 180.0f, glm::vec3(.0f, .1f, 0.0f));
+	model = glm::scale(model, glm::vec3(.4f, .4f, .4f));
+	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+	glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 	glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_INT, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 	glUseProgram(0);
-	i+=1;
+	i++;
 }
