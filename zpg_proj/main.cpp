@@ -11,5 +11,6 @@
 
 int main(void)
 {
-	Engine::Render();
+	auto& gameEngine = Engine::Get();
+	gameEngine.Render();
 }
