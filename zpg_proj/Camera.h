@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _CAMERA_H_
+#define _CAMERA_H_
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -10,6 +11,7 @@ public:
 	Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLfloat startPitch, GLfloat startMovementSpeed, GLfloat startTurnSpeed);
 	void keyControl(bool* keys, GLfloat deltaTime);
 	void mouseControl(GLfloat xChange, GLfloat yChange);
+	glm::vec3 getCameraPosition();
 	glm::mat4 calculateViewMatrix();
 	~Camera();
 private:
@@ -28,4 +30,5 @@ private:
 	void update();
 	void getToCentre();
 };
+#endif
 

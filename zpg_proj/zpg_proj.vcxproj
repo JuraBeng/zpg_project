@@ -88,13 +88,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\5th_semester\ZPG\Libraries\glm-master;D:\5th_semester\ZPG\Libraries\glfw-3.3.4.bin.WIN32\include;D:\5th_semester\ZPG\Libraries\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\Libraries\soil\include;..\..\..\Libraries\assimp\include;..\..\..\Libraries\glm-master;..\..\..\Libraries\glfw-3.3.4.bin.WIN32\include;..\..\..\Libraries\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\5th_semester\ZPG\Libraries\glew-2.1.0\bin\Release\Win32;D:\5th_semester\ZPG\Libraries\glew-2.1.0\lib\Release\Win32;D:\5th_semester\ZPG\Libraries\glfw-3.3.4.bin.WIN32\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;glfw3.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Libraries\assimp\bin\Win32\v140\Release;..\..\..\Libraries\assimp\lib\Win32\v140\Release;..\..\..\Libraries\glew-2.1.0\bin\Release\Win32;..\..\..\Libraries\glew-2.1.0\lib\Release\Win32;..\..\..\Libraries\glfw-3.3.4.bin.WIN32\lib-vc2019;..\..\..\Libraries\soil\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;glfw3.lib;glew32.lib;SOIL.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -143,19 +143,39 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainScene.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Objects\Mesh.cpp" />
+    <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shaders\Shader.cpp" />
+    <ClCompile Include="Singleton.cpp" />
+    <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="MainScene.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="Objects\Mesh.h" />
+    <ClInclude Include="Observer.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Shaders\Shader.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Skybox.h" />
+    <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

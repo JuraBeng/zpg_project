@@ -6,7 +6,6 @@
 #include <cmath>
 #include <math.h>
 
-
 int main(void)
 {
 	auto& gameEngine = Engine::get();

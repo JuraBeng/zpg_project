@@ -24,40 +24,24 @@ Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLf
 	front = glm::vec3(0.0f, 0.0f, -1.0f);
 	movementSpeed = startMovementSpeed;
 	turnSpeed = startTurnSpeed;
-	sprint = 0.1f;
+	sprint = 0.2f;
 	update();
 }
 
 void Camera::keyControl(bool* keys, GLfloat deltaTime)
 {
-	GLfloat velocity = movementSpeed * deltaTime;
-	if (keys[GLFW_KEY_LEFT_SHIFT] && keys[GLFW_KEY_W])
-	{
-		position += front * (velocity + sprint);
-	}
+	GLfloat velocity = (keys[GLFW_KEY_LEFT_SHIFT]) ? movementSpeed * deltaTime + sprint : movementSpeed * deltaTime;
 	if (keys[GLFW_KEY_W])
 	{
 		position += front * velocity;
-	}
-	if (keys[GLFW_KEY_LEFT_SHIFT] && keys[GLFW_KEY_S])
-	{
-		position -= front * (velocity + sprint);
 	}
 	if (keys[GLFW_KEY_S])
 	{
 		position -= front * velocity; 
 	}
-	if (keys[GLFW_KEY_LEFT_SHIFT] && keys[GLFW_KEY_A])
-	{
-		position -= right * (velocity + sprint);
-	}
 	if (keys[GLFW_KEY_A])
 	{
 		position -= right * velocity;
-	}
-	if (keys[GLFW_KEY_LEFT_SHIFT] && keys[GLFW_KEY_D])
-	{
-		position += right * (velocity + sprint);
 	}
 	if (keys[GLFW_KEY_D])
 	{
@@ -71,9 +55,17 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 	{
 		position -= up * velocity;
 	}
+	if (keys[GLFW_KEY_R])
+	{
+		position += front * 1.5f;
+	}
 	if (keys[GLFW_KEY_LEFT_ALT]) {
 		getToCentre();
 		update();
+	}
+	if (position.y <= 1 || position.y >= 1)
+	{
+		position.y = 1;
 	}
 }
 
@@ -94,6 +86,11 @@ void Camera::mouseControl(GLfloat xChange, GLfloat yChange)
 		pitch = -89.0f;
 	}
 	update();
+}
+
+glm::vec3 Camera::getCameraPosition()
+{
+	return position;
 }
 
 glm::mat4 Camera::calculateViewMatrix()

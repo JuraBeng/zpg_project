@@ -1,5 +1,5 @@
-#pragma once
-#define STB_IMAGE_IMPLEMENTATION
+#ifndef _ENGINE_H_
+#define _ENGINE_H_
 #include <stdio.h>
 #include <string.h>
 #include <GL/glew.h>
@@ -10,10 +10,7 @@
 #include <cmath>
 #include <stdlib.h>
 #include <GLFW/glfw3.h>
-#include "Window.h"
-//#include "sphere.h"
-
-//Include the standard C++ headers  
+#include "Window.h" 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -23,6 +20,10 @@
 #include "Objects/Mesh.h"
 #include "Shaders/Shader.h"
 #include "Camera.h"
+//#include "MainScene.h"
+#include "TestScene.h"
+#include <iostream>
+#include "Transform.h"
 
 
 class Engine
@@ -36,23 +37,10 @@ public:
 	static void render() { return get().iRender(); };
 private:
 	void iRender();
-	Engine(){
-		lastTime = 0.0f;
-		deltaTime = 0.0f;
-		vShader = "";
-		fShader = "";
-		this->window = new Window(1280, 720);
+	Engine() {
+		scene = new TestScene();
 	}
 	static Engine sInstance;
-	Window* window;
-	std::vector<Mesh*> meshList;
-	std::vector<Shader> shaderList;
-	Camera camera;
-	void createShader();
-	const char* fShader;
-	const char* vShader;
-	GLfloat deltaTime;
-	GLfloat lastTime;
-	void calculateDeltaTime();
+	TestScene* scene;
 };
-
+#endif

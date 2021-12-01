@@ -1,20 +1,22 @@
-#pragma once
+#ifndef _TEXTURE_H_
+#define _TEXTURE_H_
 #include <GL/glew.h>
+#include <stdio.h>
 #include "stb_image.h"
-#include <iostream>
 class Texture
 {
 public:
 	Texture();
-	Texture(char* fileLoc);
-	void loadTexture();
-	void useTexture();
-	void clearTexture();
+	Texture(const char* fileLoc);
+	bool LoadTexture(const char* fileName);
+	bool LoadTextureA();
+	void UseTexture();
+	void ClearTexture();
 	~Texture();
 
 private:
 	GLuint textureID;
-	int width, height, bitDepth;
-	char* fileLocation;
-};
+	int height, width, bitDepth;
 
+};
+#endif

@@ -3,9 +3,6 @@
 Shader::Shader()
 {
 	shaderID = 0;
-	uniformModel = 0;
-	uniformProjection = 0;
-	uniformView = 0;
 }
 
 void Shader::createFromFiles(const char* vertexPath, const char* fragmentPath)
@@ -43,24 +40,30 @@ void Shader::createFromString(const char* vertexCode, const char* fragmentCode)
 	compileShader(vertexCode, fragmentCode);
 }
 
-GLuint Shader::getProjectionLocation()
-{
-	return uniformProjection;
-}
-
-GLuint Shader::getModelLocation()
-{
-	return uniformModel;
-}
-
-GLuint Shader::getViewLocation()
-{
-	return uniformView;
-}
 
 void Shader::useShader()
 {
 	glUseProgram(shaderID);
+}
+
+void Shader::usePhongShader(glm::vec3 eyePos, glm::vec3 lightPos, GLfloat shininess)
+{
+		setVec3f("light.position", lightPos);
+		setVec3f("viewPos", eyePos);
+		setVec3f("light.ambient", glm::vec3(1.f, 1.0f, 1.0f));
+		setVec3f("light.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
+		setVec3f("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+		setVec3f("material.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+		setVec3f("material.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+		setVec3f("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+		set1f("material.shininess", shininess);
+}
+
+void Shader::useLambertShader(glm::vec3 lightPos)
+{
+	setVec3f("light.position", lightPos);
+	setVec3f("objectColor", glm::vec3(0.5f, 0.5f, 0.1f));
+	setVec3f("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
 }
 
 void Shader::clearShader()
@@ -69,15 +72,21 @@ void Shader::clearShader()
 	{
 		glDeleteProgram(shaderID);
 	}
-	shaderID = 0;
-	uniformModel = 0;
-	uniformProjection = 0;
-	uniformView = 0;
 }
 
 void Shader::setMat4f(const std::string& name, const glm::mat4& mat)
 {
 	glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}
+
+void Shader::setVec3f(const std::string& name, const glm::vec3 vec)
+{
+	glUniform3f(glGetUniformLocation(shaderID, name.c_str()), vec.x, vec.y, vec.z);
+}
+
+void Shader::set1f(const std::string& name, const GLfloat val)
+{
+	glUniform1f(glGetUniformLocation(shaderID, name.c_str()), val);
 }
 
 Shader::~Shader()
@@ -93,7 +102,7 @@ void Shader::compileShader(const char* vertexCode, const char* fragmentCode)
 		printf("Error creating shader program\n");
 		return;
 	}
-
+	
 	addShader(shaderID, vertexCode, GL_VERTEX_SHADER);
 	addShader(shaderID, fragmentCode, GL_FRAGMENT_SHADER);
 	GLint result = 0;
@@ -114,9 +123,6 @@ void Shader::compileShader(const char* vertexCode, const char* fragmentCode)
 		printf("Error validating program: %s", eLog);
 		return;
 	}
-	//uniformModel = glGetUniformLocation(shaderID, "model");
-	//uniformProjection = glGetUniformLocation(shaderID, "projection");
-	//uniformView = glGetUniformLocation(shaderID, "view");
 }
 
 

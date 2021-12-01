@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _WINDOW_H_
+#define _WINDOW_H_
 #include <stdio.h>
 #include <string.h>
 #include <GL/glew.h>
@@ -38,4 +39,5 @@ private:
 	static void handleMouse(GLFWwindow* window, double xPos, double yPos);
 	static void handleKeys(GLFWwindow* window, int key, int code, int action, int mode);
 };
+#endif
 

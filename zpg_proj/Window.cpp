@@ -53,6 +53,7 @@ Window::Window(int width, int height)
 	glfwMakeContextCurrent(window);
 
 	createCallbacks();
+	glfwSwapInterval(1);
 	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	glewExperimental = GL_TRUE;
